@@ -18,7 +18,7 @@
 - has_many :products
 - has_many :orders
 
-## customer テーブル
+## customers テーブル
 
 | Column            | Type       | Options                        |
 | ----------------- | ---------- | ------------------------------ |
@@ -27,14 +27,14 @@
 | city              | string     | null: false                    |
 | address           | string     | null: false                    |
 | building_name     | string     |                                |
-| phone_number      | string     | null: false                    |                               |
-| order_id          |            |                                |
+| phone_number      | string     | null: false                    |
+| order             | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to : order
 
-## product テーブル
+## products テーブル
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
@@ -53,7 +53,7 @@
 - belongs_to : user
 - has_one :order
 
-## order テーブル
+## orders テーブル
 
 | Column       | Type       | Options                        |
 | ------------ | ---------- | ------------------------------ |
