@@ -16,7 +16,7 @@
 ### Association
 
 - has_many : items
-- has_many : order
+- has_many : orders
 
 ## customer テーブル
 
@@ -37,19 +37,7 @@
 ### Association
 
 - belongs_to : user
-- has_many : order
-
-## card テーブル
-
-| Column        | Type       | Options                        |
-| ------------- | ---------- | ------------------------------ |
-| user_id       | integer    | null: false, foreign_key: true |
-| customer_id   | string     | null: false                    |
-| card_id       | string     | null: false                    |
-
-### Association
-
-- belongs_to : user
+- has_many : orders
 
 ## product テーブル
 
@@ -71,13 +59,15 @@
 - belongs_to : order
 - belongs_to_active_hash :prefecture
 
-## image テーブル
+## order テーブル
 
-| Column     | Type    | Options                        |
-| ---------- | ------- | ------------------------------ |
-| image      | string  | null: false                    |
-| product_id | integer | null: false, foreign_key: true |
+| Column          | Type    | Options                        |
+| --------------- | ------- | ------------------------------ |
+| user_id         | integer | null: false, foreign_key: true |
+| product_id      | integer | null: false, foreign_key: true |
+| order_date      | date    | null: false                    |
 
 ### Association
 
+- belongs_to :user
 - belongs_to :product
