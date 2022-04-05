@@ -45,23 +45,23 @@
 | shopping_cost_id | integer    | null: false                    |
 | shopping_days_id | integer    | null: false                    |
 | prefecture_id    | integer    | null: false                    |
-| category_id      | integer    | null: false, foreign_key: true |
-| shipping_id      | integer    | null: false, foreign_key: true |
+| category_id      | references | null: false, foreign_key: true |
 | user             | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to : user
-- has_many :order
+- belongs_to :order
 
 ## order テーブル
 
-| Column          | Type    | Options                        |
-| --------------- | ------- | ------------------------------ |
-| user_id         | integer | null: false, foreign_key: true |
-| product_id      | integer | null: false, foreign_key: true |
+| Column          | Type       | Options                        |
+| --------------- | ---------- | ------------------------------ |
+| user_id         | references | null: false, foreign_key: true |
+| product_id      | references | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :product
+- has_one :product
 - belongs_to :user
+- belongs_to :customer
