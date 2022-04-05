@@ -16,7 +16,6 @@
 ### Association
 
 - has_many :products
-- belongs_to :customer
 - has_many :orders
 
 ## customer テーブル
@@ -28,9 +27,8 @@
 | city              | string     | null: false                    |
 | address           | string     | null: false                    |
 | building_name     | string     |                                |
-| phone_number      | string     | null: false                    |
-| user              | references | null: false, foreign_key: true |
-| product           | references | null: false, foreign_key: true |                               |
+| phone_number      | string     | null: false                    |                               |
+| order_id          |            |                                |
 
 ### Association
 
