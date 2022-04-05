@@ -15,8 +15,8 @@
 
 ### Association
 
-- has_many : items
-- has_many : orders
+- has_many :products
+- belongs_to :customer
 
 ## customer テーブル
 
@@ -37,7 +37,6 @@
 ### Association
 
 - belongs_to : user
-- has_many : orders
 
 ## product テーブル
 
@@ -56,8 +55,8 @@
 
 ### Association
 
-- belongs_to : order
-- belongs_to_active_hash :prefecture
+- belongs_to : user
+- has_many :orders
 
 ## order テーブル
 
@@ -69,5 +68,4 @@
 
 ### Association
 
-- belongs_to :user
 - belongs_to :product
