@@ -11,7 +11,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @user = user.new(item_params)
+    @user = user.new(user_params)
     if @user.save
       redirect_to root_path
     else
