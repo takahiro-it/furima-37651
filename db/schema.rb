@@ -10,44 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_06_105849) do
-
-  create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "post_code", null: false
-    t.integer "prefecture_id", null: false
-    t.string "city", null: false
-    t.string "address", null: false
-    t.string "building_name"
-    t.string "phone_number", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "order_id", null: false
-    t.index ["order_id"], name: "index_customers_on_order_id"
-  end
-
-  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "product_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["product_id"], name: "index_orders_on_product_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
-  end
-
-  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "price", null: false
-    t.text "description", null: false
-    t.integer "status_id", null: false
-    t.integer "shopping_cost_id", null: false
-    t.integer "shopping_day_id", null: false
-    t.integer "prefecture_id", null: false
-    t.integer "category_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_products_on_user_id"
-  end
+ActiveRecord::Schema.define(version: 2022_04_05_090455) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -67,8 +30,4 @@ ActiveRecord::Schema.define(version: 2022_04_06_105849) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "customers", "orders"
-  add_foreign_key "orders", "products"
-  add_foreign_key "orders", "users"
-  add_foreign_key "products", "users"
 end
