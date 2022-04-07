@@ -13,4 +13,11 @@ class UsersController < ApplicationController
   def logout
     @user = current_user
   end
+
+  def update
+    if current_user.update(user_params)
+      redirect_to root_path
+    else
+      render :edit
+    end
 end
