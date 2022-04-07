@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  get 'items/index'
-  # get 'orders/index'
+  Rails.application.routes.draw do
+    devise_for :users, controllers: { registrations: 'users/registrations' }
   root to: "items#index"
+  resources :items
 end
-
+end
