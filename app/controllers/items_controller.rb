@@ -21,4 +21,11 @@ class ItemsController < ApplicationController
       redirect_to new_item_path, flash: { error: @item.errors.full_messages }
     end
   end
+
+  private
+
+  def item_params
+    params.require(:item).permit(:id, :name, :price, :description, :category_id, :user_id, :created_at, :updated_at, :item_image_id, :status_id, :shopping_cost_id, :shopping_day_id, :prefecture_id, item_images_attributes: [:image])
+  end
+
 end
