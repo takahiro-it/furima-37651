@@ -10,15 +10,18 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @item = Item.new
+    @item.item_images.new
+    @category_parent_array = Category.where(ancestry: nil).pluck(:name)
   end
 
   def create
-    @product = Product.new(product_params)
-    if @product.save
+    @item = Item.new(item_params)
+    @item.seller_id = current_user.id
+    if @item.save
       redirect_to root_path
     else
-      render :new
+      redirect_to new_item_path, flash: { error: @item.errors.full_messages }
     end
   end
 end
