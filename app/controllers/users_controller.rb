@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-end
   # def show
   #   @user = current_user
   # end
@@ -21,4 +20,4 @@ end
   #   else
   #     render :edit
   #   end
-
+end
