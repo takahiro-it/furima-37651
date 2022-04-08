@@ -1,18 +1,17 @@
 class ItemsController < ApplicationController
   # before_action :set_item, only: [:show, :edit, :destroy]
-  # before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index]
 
-  before_action :require_login, only: :new, alert: 'You need to sign in or sign up before continuing.'
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    @products = Product.all.order('created_at DESC')
+    @items = Item.all.order('created_at DESC')
   end
 
   def new
     @item = Item.new
-    @item.item_images.new
-    @category_parent_array = Category.where(ancestry: nil).pluck(:name)
+    # @item.item_images.new
+    # @category_parent_array = Category.where(ancestry: nil).pluck(:name)
   end
 
   def create
