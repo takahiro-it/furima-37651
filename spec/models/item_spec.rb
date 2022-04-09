@@ -1,116 +1,93 @@
 require 'rails_helper'
 
-describe Item do
+RSpec.describe Item, type: :model do
   describe '#create' do
-    # 1.写真や名前他全ての項目が存在すれば登録できること
-    it "is valid with a name, description, category_id, status_id, shopping_cost_id, prefecture_id, shopping_day_id, price" do
-      item = build(:item)
-      expect(item).to be_valid
-    end
-
-    # 2.nameが空だと登録できないこと
-    it "is invalid without a name" do
-      item = build(:item, name: nil)
-      item.valid?
-      expect(item.errors[:name]).to include("が入力されていません。")
-    end
-
-    # 3.descriptionが空だと登録できないこと
-    it "is invalid without a description" do
-      item = build(:item, description: nil)
-      item.valid?
-      expect(item.errors[:description]).to include("が入力されていません。")
-    end
-
-    # 4.categoryが空だと登録できないこと
-    it "is invalid without a category" do
-      item = build(:item, category_id: nil)
-      item.valid?
-      expect(item.errors[:category_id]).to include("が入力されていません。")
-    end
-
-    # 5.status_idが空だと登録できないこと
-    it "is invalid without a item_condition_id" do
-      item = build(:item, status_id: "")
-      item.valid?
-      expect(item.errors[:status_id]).to include("が入力されていません。")
-    end
-
-    # 6.shopping_cost_idが空だと登録できないこと
-    it "is invalid without a shopping_cost_id" do
-      item = build(:item, shopping_cost_id: "")
-      item.valid?
-      expect(item.errors[:shopping_cost_id]).to include("が入力されていません。")
-    end
-
-    # 7.prefecture_idが空だと登録できないこと
-    it "is invalid without a prefecture_id" do
-      item = build(:item, prefecture_id: nil)
-      item.valid?
-      expect(item.errors[:prefecture_id]).to include("が入力されていません。")
-    end
-
-    # 8.shopping_day_idが空だと登録できないこと
-    it "is invalid without a shopping_day_id" do
-      item = build(:item, shopping_day_id: nil)
-      item.valid?
-      expect(item.errors[:shopping_day_id]).to include("が入力されていません。")
-    end
-
-    # 9.priceが空だと登録できないこと
-    it "is invalid without a price" do
-      item = build(:item, price: nil)
-      item.valid?
-      expect(item.errors[:price]).to include("が入力されていません。")
-    end
+  before do
+    @item = FactoryBot.build(:item)
+    @item.image = fixture_file_upload('public/images/test_image.png')
   end
 
-  describe '#update' do
-    # 1.変更可能な項目が存在すれば登録できること
-    it "is valid with a name, description, category_id, status_id, shopping_cost_id, prefecture_id, shopping_day_id, price" do
-      item = build(:item)
-      expect(item).to be_valid
-    end
-
-    # 2.nameが空だと登録できないこと
-    it "is invalid without a name" do
-      item = build(:item, name: nil)
-      item.valid?
-      expect(item.errors[:name]).to include("が入力されていません。")
-    end
-
-    # 3.descriptionが空だと登録できないこと
-    it "is invalid without a item_description" do
-      item = build(:item, description: nil)
-      item.valid?
-      expect(item.errors[:description]).to include("が入力されていません。")
-    end
-
-    # 4.priceが空だと登録できないこと
-    it "is invalid without a price" do
-      item = build(:item, price: nil)
-      item.valid?
-      expect(item.errors[:price]).to include("が入力されていません。")
-    end
-  end
+# 出品情報について
+it '必須項目を入力した上で出品ができる' do
+  expect(@item).to  be_valid
 end
 
-describe ItemImage do
-  describe '#create' do
-    # 1.imageが空だと登録できないこと
-    it "is invalid without a image" do
-      item_image = build(:item_image, image: nil)
-      item_image.valid?
-      expect(item_image.errors[:image]).to include("が入力されていません。")
-    end
-  end
+it '画像がないと登録できない' do
+  @item.image = nil
+  @item.valid?
+  expect(@item.errors.full_messages).to include("Image can't be blank")
+end
 
-  describe '#update' do
-    # 1.imageが空だと登録できないこと
-    it "is invalid without a image" do
-      item_image = build(:item_image, image: nil)
-      item_image.valid?
-      expect(item_image.errors[:image]).to include("が入力されていません。")
-    end
-  end
+it '商品名がないと登録できない' do
+  @item.name = nil
+  @item.valid?
+  expect(@item.errors.full_messages).to include("Name can't be blank")
+end
+
+it '商品の説明がないと登録できない' do
+  @item.description = nil
+  @item.valid?
+  expect(@item.errors.full_messages).to include("Description can't be blank")
+end
+
+it 'カテゴリーのプルダウンが---だと登録できない' do
+  @item.category_id = 0
+  @item.valid?
+  expect(@item.errors.full_messages).to include('Category select')
+end
+
+it '商品の状態についてのプルダウンが---だと登録できない' do
+  @item.status_id = 0
+  @item.valid?
+  expect(@item.errors.full_messages).to include('Status select')
+end
+
+it '配送料の負担についてのプルダウンが---だと登録できない' do
+  @item.shopping_cost_id = 0
+  @item.valid?
+  expect(@item.errors.full_messages).to include('Shopping cost select')
+end
+
+it '発送元の地域についてのプルダウンが---だと登録できない' do
+  @item.prefecture_id = 0
+  @item.valid?
+  expect(@item.errors.full_messages).to include('Prefecture select')
+end
+
+it '発送までの日数についてのプルダウンが---だと登録できない' do
+  @item.shopping_day_id = 0
+  @item.valid?
+  expect(@item.errors.full_messages).to include('Shopping day select')
+end
+
+it '価格についての情報がないと登録できない' do
+  @item.price = nil
+  @item.valid?
+  expect(@item.errors.full_messages).to include("Price can't be blank")
+end
+
+it '価格が300円以下だと登録できない' do
+  @item.price = 299
+  @item.valid?
+  expect(@item.errors.full_messages).to include('Price Out of setting range')
+end
+
+it '価格が9999999円以上だと登録できない' do
+  @item.price = 10_000_000
+  @item.valid?
+  expect(@item.errors.full_messages).to include('Price Out of setting range')
+end
+
+it '価格についての情報がないと登録できない' do
+  @item.price = nil
+  @item.valid?
+  expect(@item.errors.full_messages).to include("Price can't be blank")
+end
+
+it '販売価格は半角数字以外では登録できない' do
+  @item.price = '１０００'
+  @item.valid?
+  expect(@item.errors.full_messages).to include('Price Out of setting range')
+end
+end
 end
