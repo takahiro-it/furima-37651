@@ -1,7 +1,5 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
-  
-  belongs_to :genre
 
   belongs_to_active_hash :category
   belongs_to_active_hash :shopping_day
@@ -28,7 +26,7 @@ class Item < ApplicationRecord
 
   with_options numericality: { other_than: 0, message: 'select' } do
   validates :category_id
-  validates :day_id
+  validates :shopping_day_id
   validates :shopping_cost_id
   validates :prefecture_id
   validates :status_id
