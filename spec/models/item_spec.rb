@@ -91,7 +91,7 @@ require 'rails_helper'
       it '販売価格は半角数字以外では登録できない' do
         @item.price = '１０００'
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price Price Half-width number')
+        expect(@item.errors.full_messages).to include('Price Half-width number')
       end
     end  
   end
