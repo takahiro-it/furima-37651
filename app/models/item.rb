@@ -8,7 +8,6 @@ class Item < ApplicationRecord
   belongs_to_active_hash :status
 
   belongs_to :user
-  has_one    :item
   has_one_attached :image
 
   with_options presence: true do
@@ -31,6 +30,6 @@ class Item < ApplicationRecord
   validates :status_id
   end
 
-  validates :price, format: { with: /\A[0-9]+\z/, message: 'Price Half-width number' }, inclusion: { in: (300..9_999_999), message: 'Out of setting range' }
+  validates :price, numericality: { only_integer: true, message: 'Price Half-width number' }, inclusion: { in: (300..9_999_999), message: 'Out of setting range' }
 end
 
