@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :item do
     
-    # after(:build) do |item|
-    #   @item.image = fixture_file_upload('public/images/test_image.png')
+    after(:build) do |item|
+    @item.image = fixture_file_upload('public/images/test_image.png')
 
     name { Faker::Commerce.product_name }
     description { Faker::Lorem.characters(16) }
