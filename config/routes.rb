@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  Rails.application.routes.draw do
-    devise_for :users, controllers: { registrations: 'users/registrations' }
-  root to: "items#index"
-  resources :items
-end
+  devise_for :users
+  root "items#index"
+  resources :items do
+    resources :comments, only: [:create, :destroy] 
+  end
 end
