@@ -27,10 +27,13 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @post = Item.find(params[:id])
+    if @item.update(item_params)
       redirect_to item_path
+    else
       render :new
     end
+  end
+
 
   # def destroy
   #   if @item.destroy
