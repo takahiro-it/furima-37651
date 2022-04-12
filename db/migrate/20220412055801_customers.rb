@@ -1,4 +1,4 @@
-class Customers < ActiveRecord::Migration[6.0]
+class CreateCustomers < ActiveRecord::Migration[6.0]
   def change
     create_table :customers do |t|
       t.string      :post_code,   null: false
