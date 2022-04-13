@@ -1,6 +1,7 @@
 class OrderCustomer < ApplicationRecord
   include ActiveModel::Model
-  attr_accessor :post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :price, :user_id, :item_id
+  attr_accessor :post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :price, :user_id, :item_id, :token
+
 
   with_options presence: true do
     validates :price, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000000, message: 'is invalid'}
@@ -10,6 +11,7 @@ class OrderCustomer < ApplicationRecord
     validates :city, format: { with: /\A[ぁ-んァ-ン一-龥]/, message: "is invalid. Input full-width characters."}
     validates :address
     validates :phone_number, format: {with: /\A[0-9]{11}\z/, message: "is invalid."}
+    validates :token, presence: true
   end
     validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
   
