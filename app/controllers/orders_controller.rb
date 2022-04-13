@@ -1,32 +1,29 @@
 class OrdersController < ApplicationController
+
   def index
     @item = Item.find(params[:item_id])
-    # @order_customer = OrderCustomer.all
+    @order_customer = OrderCustomer.new
+  end
+
+  def new
+    @order_customer = OrderCustomer.new
   end
 
   def create
-    @order_customer = OrderCustomer.create(order_params)
-    Customer.create(customer_params)
+    @order_customer = OrderCustomer.new(order_params)
     if @order_customer.valid?
       pay_item
       @order_customer.save
       redirect_to root_path 
     else
-      render 'index'
+      render :new
     end
-  end
-
-  def new
   end
 
   private
 
   def order_params
-    params.permit(:user, :item).merge(user_id: current_user.id, customer_id: @customer.id)
-  end
-
-  def customer_params
-    params.permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number).merge(order_id: @order.id, token: params[:token])
+    params.require(:order_customer).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number).merge(user_id: current_user.id)
   end
 
   def pay_item
@@ -37,8 +34,6 @@ class OrdersController < ApplicationController
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
   end
-
 end
-
 
 

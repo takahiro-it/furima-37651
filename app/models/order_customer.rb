@@ -1,10 +1,6 @@
 class OrderCustomer 
   include ActiveModel::Model
-  attr_accessor :post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :price, :user_id, :item_id, :token
-
-  # belongs_to :user
-  # belongs_to :item
-  # has_one    :customer
+  attr_accessor :post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :orders_id, :user_id, :item_id, :token
 
   with_options presence: true do
     validates :price, numericality: {only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 1000000, message: 'is invalid'}
@@ -20,7 +16,7 @@ class OrderCustomer
   
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
-      Customer.create(post_code: post_code,  prefecture_id: prefecture_id, city: city, address: address, building_name: building_name, phone_number: phone_number, order_id: order.id)
+      Customer.create(post_code: post_code,  prefecture_id: prefecture_id, city: city, address: address, building_name: building_name, phone_number: phone_number, orders_id: orders.id)
   end
 end
 
