@@ -14,7 +14,7 @@
         </h2>
         <div class='buy-item-price'>
           <p class='item-price-text'>¥<%= @item.price %></p>
-          <p class='item-price-sub-text'><%= item.shopping_cost.name %></p>
+          <p class='item-price-sub-text'><%= @item.shopping_cost.name %></p>
         </div>
       </div>
     </div>
@@ -31,8 +31,8 @@
     </div>
     <%# /支払額の表示 %>
 
-    <%= form_with model: @order_customer, url: item_orders_path, id: 'charge-form', class: 'card-form', local: true do |f| %>
-    <%= render 'error_messages', model: @orders %>
+    <%= form_with model: @item, url: item_orders_path, id: 'charge-form', class: 'card-form', local: true do |f| %>
+    <%= render 'shared/error_messages', model: f.object %>
     
     <%# カード情報の入力 %>
     <div class='credit-card-form'>
@@ -91,7 +91,7 @@
           <label class="form-text">都道府県</label>
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:prefecture_id, [Prefecture.all], :id, :name, {}, {class:"select-box", id:"prefecture"}) %>
+        <%= f.collection_select(:prefecture_id, Prefecture.all, :id, :name, {}, {class:"select-box", id:"prefecture"}) %>
       </div>
       <div class="form-group">
         <div class='form-text-wrap'>

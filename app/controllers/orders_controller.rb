@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   def index
-    @order = Order.new
+    @item = Item.find(params[:item_id])
+    @order_customer = OrderCustomer.new
   end
 
   def create
@@ -19,7 +20,7 @@ class OrdersController < ApplicationController
 
   private
   def order_params
-    params.require(:order_customer).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :price).merge(token: params[:token] user_id: current_user.id, item_id: @item.id)
+    params.require(:order_customer).permit(:post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :price).merge(token: params[:token], user_id: current_user.id, item_id: @item.id)
   end
 
   def pay_item
