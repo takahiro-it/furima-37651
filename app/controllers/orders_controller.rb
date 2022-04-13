@@ -1,22 +1,19 @@
 class OrdersController < ApplicationController
   def index
-    @item = Item.find(params[:item_id])
-    @order_customer = OrderCustomer.new
+    @order = Order.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
-    @order_customer = OrderCustomer.new(ordere_params)
+    @order_customer = OrderCustomer.new(order_params)
     if @order_customer.valid?
       @order_customer.save
       redirect_to root_path 
     else
-      render :index
+      render 'index'
     end
   end
 
   def new
-    @order_customer = OrderCustomer.new
   end
 
   private
