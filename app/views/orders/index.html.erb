@@ -31,8 +31,9 @@
     </div>
     <%# /支払額の表示 %>
 
-    <%= form_with model: @order, url: item_orders_path, id: 'charge-form', class: 'card-form', local: true do |f| %>
-    <%= render 'layouts/error_messages', model: f.object %>
+    <%= form_with model: @order_customer, url: new_item_order_path, id: 'charge-form', class: 'card-form', local: true do |f| %>
+    
+    <%# <%= render 'error_messages', model: f.object %> 
     
     <%# カード情報の入力 %>
     <div class='credit-card-form'>
