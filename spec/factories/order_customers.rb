@@ -6,7 +6,7 @@ FactoryBot.define do
     municipality { Gimei.address.city.kanji }
     address { Gimei.address.town.kanji }
     phone_number { '00000000000' }
-    association :product
+    association :item
     association :user
   end
 end

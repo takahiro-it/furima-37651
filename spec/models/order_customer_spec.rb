@@ -18,11 +18,11 @@ RSpec.describe OrderCustomer, type: :model do
 
     context '商品が購入できない場合' do
 
-      it 'トークンが空だと登録できない' do
-        @orders.token = nil
-        @orders.valid?
-        expect(@orders.errors.full_messages).to include("Token can't be blank")
-      end
+      # it 'トークンが空だと登録できない' do
+      #   @orders.token = nil
+      #   @orders.valid?
+      #   expect(@orders.errors.full_messages).to include("Token can't be blank")
+      # end
 
       it '郵便番号がないと登録できない' do
         @orders.post_code = nil
