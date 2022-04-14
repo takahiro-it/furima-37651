@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
   def index
     @item = Item.find(params[:item_id])
     @order_customer = OrderCustomer.new
+    @customer = Customer.all
   end
 
   def new
@@ -10,7 +11,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order_customer = OrderCustomer.new(order_params)
+    @order = OrderCustomer.new(order_params)
     if @order_customer.valid?
       pay_item
       @order_customer.save
