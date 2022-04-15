@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, except: [:new]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :move_to_index, except: [:index, :show]
 
   def index
     @item = Item.find(params[:item_id])
@@ -22,11 +24,37 @@ class OrdersController < ApplicationController
       pay_item
       @order_customer.save
       current_user == @item.user
-      redirect_to root_path
+      redirect_to root_path unless current_user.id == @buy_item.user_id
     else
       render :index
 
     end
+  end
+
+  def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @order.update(order_params)
+      redirect_to root_path(@order.id) unless current_user.id == @buy_item.user_id
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    if @order.destroy
+      redirect_to root_path
+    else
+      redirect :show
+    end
+  end
+
+  def move_to_index
+    redirect_to new_user_session_path unless user_signed_in?
   end
 
   private
