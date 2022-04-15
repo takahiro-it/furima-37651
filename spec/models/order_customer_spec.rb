@@ -4,17 +4,18 @@ RSpec.describe OrderCustomer, type: :model do
   describe 'create' do
 
     before do
-      user = FactoryBot.create(:user)
-      @order_customer = FactoryBot.build(:order_customer, user_id: user.id)
+      user = FactoryBot.build(:user)
+      
+      @order_customer = FactoryBot.build(:order_customer, user_id: user.id,)
     end
 
     # 購入関連
-    # context '商品が購入できる場合' do
+    context '商品が購入できる場合' do
 
-    #   it '必須項目を入力した上で購入ができる' do
-    #     expect(@order_customer).to  be_valid
-    #   end
-    # end
+      it '必須項目を入力した上で購入ができる' do
+        expect(@order_customer).to  be_valid
+      end
+    end
 
     context '商品が購入できない場合' do
 
@@ -33,7 +34,7 @@ RSpec.describe OrderCustomer, type: :model do
       it '郵便番号にハイフンがないと登録できない' do
         @order_customer.post_code = '7777777'
         @order_customer.valid?
-        expect(@order_customer.errors.full_messages).to include("Is invalid. Include hyphen(-)")
+        expect(@order_customer.errors.full_messages).to include("Post code is invalid")
       end
 
       it '都道府県についてのプルダウンが---だと登録できない' do
@@ -69,7 +70,7 @@ RSpec.describe OrderCustomer, type: :model do
       it '電話番号にハイフンがあると登録できない' do
         @order_customer.phone_number = '000-0000-0000'
         @order_customer.valid?
-        expect(@order_customer.errors.full_messages).to include("Is invalid. Include hyphen(-)")
+        expect(@order_customer.errors.full_messages).to include("Phone number is invalid. Include hyphen(-)")
       end
     end
   end

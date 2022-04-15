@@ -5,7 +5,7 @@ FactoryBot.define do
     
     
     post_code           { "123-4567" }
-    prefecture_id       { 13 }
+    prefecture_id       { 1 }
     city                { "渋谷区" }
     address             { "テスト坂1-1" }
     building_name       { "テストビル101" }
