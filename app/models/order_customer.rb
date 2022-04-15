@@ -10,6 +10,7 @@ class OrderCustomer
     validates :address
     validates :phone_number, format: {with: /\A[0-9]{11}\z/, message: "is invalid."}
     validates :token, presence: true
+    
   end
     validates :prefecture_id, numericality: { other_than: 0, message: "can't be blank"}
   
