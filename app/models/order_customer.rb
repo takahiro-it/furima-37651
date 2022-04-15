@@ -16,7 +16,7 @@ class OrderCustomer
   
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
-      Customer.create(post_code: post_code,  prefecture_id: prefecture_id, city: city, address: address, price: price, building_name: building_name, phone_number: phone_number, orders_id: orders.id)
+      Customer.create(post_code: post_code,  prefecture_id: prefecture_id, city: city, address: address, building_name: building_name, phone_number: phone_number, orders_id: orders.id)
   end
 end
 
