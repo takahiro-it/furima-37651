@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
   before_action :move_to_index, except: [:index]
 
   def index
-    @item = Item.find(params[:item_id])
     @order_customer = OrderCustomer.new
     @customer = Customer.all
     redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
@@ -12,7 +11,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_customer = OrderCustomer.new(order_params)
     if @order_customer.valid?
       pay_item
