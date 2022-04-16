@@ -46,8 +46,8 @@ class OrdersController < ApplicationController
 
     redirect_to root_path(@order.id) if @item.order != nil
 
-    redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
-    redirect_to root_path if ログイン中ユーザーが出品したユーザーであるもしくは商品が売却済み
+    # redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
+    # redirect_to root_path if ログイン中ユーザーが出品したユーザーであるもしくは商品が売却済み
 
     end
   end
