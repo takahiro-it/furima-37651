@@ -8,11 +8,7 @@ class OrdersController < ApplicationController
     @order_customer = OrderCustomer.new
     @customer = Customer.all
     redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
-  end
-
-  def new
-    @order_customer = OrderCustomer.new
-    @item = Item.find(params[:item_id])
+    end
   end
 
   def create
@@ -25,46 +21,6 @@ class OrdersController < ApplicationController
       redirect_to root_path unless current_user.id == @user_item.user_id
     else
       render :index
-
-    end
-  end
-
-  def show
-    @order = Order.new
-    @item = Item.find(params[:item_id])
-    @item.order != nil
-      redirect_to root_path(@order.id) unless current_user.id == @user_item.user_id
-    end
-
-  def edit
-    @order = Order.new
-    @item = Item.find(params[:item_id])
-    if @item.user_id != current_user.id
-      @item.order != nil
-    current_user == @item.user
-    redirect_to root_path(@order.id) unless current_user.id == @user_item.user_id
-
-    redirect_to root_path(@order.id) if @item.order != nil
-
-    # redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
-    # redirect_to root_path if ログイン中ユーザーが出品したユーザーであるもしくは商品が売却済み
-
-    end
-  end
-
-  def update
-    if @order.update(order_params)
-      redirect_to root_path(@order.id) unless current_user.id == @user_item.user_id
-    else
-      render :edit
-    end
-  end
-
-  def destroy
-    if @order.destroy
-      redirect_to root_path
-    else
-      redirect :show
     end
   end
 

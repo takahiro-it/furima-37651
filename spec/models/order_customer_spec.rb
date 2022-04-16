@@ -13,8 +13,13 @@ RSpec.describe OrderCustomer, type: :model do
     context '商品が購入できる場合' do
 
       it '必須項目を入力した上で購入ができる' do
-        expect(@order_customer).to  be_valid
+        expect(@order_customer).to be_valid
       end
+
+      it '建物名が空でも購入できること' do
+        @order_customer.building_name = nil
+      end
+
     end
 
     context '商品が購入できない場合' do
@@ -61,17 +66,34 @@ RSpec.describe OrderCustomer, type: :model do
         expect(@order_customer.errors.full_messages).to include("Phone number can't be blank")
       end
 
-      it '電話番号が短いと登録できない' do
-        @order_customer.phone_number = '000000'
-        @order_customer.valid?
-        expect(@order_customer.errors.full_messages).to include("Phone number is too short")
-      end
-
       it '電話番号にハイフンがあると登録できない' do
         @order_customer.phone_number = '000-0000-0000'
         @order_customer.valid?
         expect(@order_customer.errors.full_messages).to include("Phone number is invalid. Include hyphen(-)")
       end
+
+      it '9桁以下では登録できないこと' do
+        @order_customer.phone_number = '000000'
+        @order_customer.valid?
+        expect(@order_customer.errors.full_messages).to include("Phone number is too short")
+      end
+
+      it '半角数字以外が含まれている場合、登録できないこと' do
+        @order_customer.phone_number = '０００００'
+        @order_customer.valid?
+        expect(@order_customer.errors.full_messages).to include("Phone number is invalid. Input only number")
+      end
+
+      it 'user_idが空だと登録できない' do
+        @order_customer.user_id = nil
+        @order_customer.valid?
+      end
+
+      it 'item_idが空だと登録できない' do
+        @order_customer.item_id = nil
+        @order_customer.valid?
+      end
+
     end
   end
 end
