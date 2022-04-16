@@ -4,8 +4,7 @@ RSpec.describe OrderCustomer, type: :model do
   describe 'create' do
 
     before do
-      user = FactoryBot.build(:user)
-      
+      user = FactoryBot.build(:user)    
       @order_customer = FactoryBot.build(:order_customer, user_id: user.id,)
     end
 
