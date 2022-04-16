@@ -4,8 +4,9 @@ RSpec.describe OrderCustomer, type: :model do
   describe 'create' do
 
     before do
-      user = FactoryBot.build(:user)    
-      @order_customer = FactoryBot.build(:order_customer, user_id: user.id,)
+      user = FactoryBot.create(:user)    
+      item = FactoryBot.create(:item) 
+      @order_customer = FactoryBot.build(:order_customer, user_id: user.id, item_id: item.id)
     end
 
     # 購入関連
@@ -68,19 +69,19 @@ RSpec.describe OrderCustomer, type: :model do
       it '電話番号にハイフンがあると登録できない' do
         @order_customer.phone_number = '000-0000-0000'
         @order_customer.valid?
-        expect(@order_customer.errors.full_messages).to include("Phone number is invalid. Include hyphen(-)")
+        expect(@order_customer.errors.full_messages).to include("Phone number is invalid")
       end
 
       it '9桁以下では登録できないこと' do
         @order_customer.phone_number = '000000'
         @order_customer.valid?
-        expect(@order_customer.errors.full_messages).to include("Phone number is too short")
+        expect(@order_customer.errors.full_messages).to include("Phone number is invalid")
       end
 
       it '半角数字以外が含まれている場合、登録できないこと' do
         @order_customer.phone_number = '０００００'
         @order_customer.valid?
-        expect(@order_customer.errors.full_messages).to include("Phone number is invalid. Input only number")
+        expect(@order_customer.errors.full_messages).to include("Phone number is invalid")
       end
 
       it 'user_idが空だと登録できない' do

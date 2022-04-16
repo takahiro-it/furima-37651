@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: [:new]
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :index, :create]
-  before_action :move_to_index, except: [:index, :show]
+  before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
+  before_action :move_to_index, except: [:index]
 
   def index
     @item = Item.find(params[:item_id])
