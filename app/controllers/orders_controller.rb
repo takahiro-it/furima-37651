@@ -1,15 +1,13 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, except: [:new]
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :index, :create]
   before_action :move_to_index, except: [:index, :show]
 
   def index
     @item = Item.find(params[:item_id])
     @order_customer = OrderCustomer.new
     @customer = Customer.all
-    if current_user == @item.user
-       redirect_to root_path
-    end
+    redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
   end
 
   def new
@@ -24,7 +22,7 @@ class OrdersController < ApplicationController
       pay_item
       @order_customer.save
       current_user == @item.user
-      redirect_to root_path unless current_user.id == @buy_item.user_id
+      redirect_to root_path unless current_user.id == @user_item.user_id
     else
       render :index
 
@@ -32,14 +30,31 @@ class OrdersController < ApplicationController
   end
 
   def show
-  end
+    @order = Order.new
+    @item = Item.find(params[:item_id])
+    @item.order != nil
+      redirect_to root_path(@order.id) unless current_user.id == @user_item.user_id
+    end
 
   def edit
+    @order = Order.new
+    @item = Item.find(params[:item_id])
+    if @item.user_id != current_user.id
+      @item.order != nil
+    current_user == @item.user
+    redirect_to root_path(@order.id) unless current_user.id == @user_item.user_id
+
+    redirect_to root_path(@order.id) if @item.order != nil
+
+    redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
+    redirect_to root_path if ログイン中ユーザーが出品したユーザーであるもしくは商品が売却済み
+
+    end
   end
 
   def update
     if @order.update(order_params)
-      redirect_to root_path(@order.id) unless current_user.id == @buy_item.user_id
+      redirect_to root_path(@order.id) unless current_user.id == @user_item.user_id
     else
       render :edit
     end
@@ -66,6 +81,16 @@ class OrdersController < ApplicationController
   def move_to_signed_in
     unless user_signed_in?
       redirect_to '/users/sign_in'
+    end
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
+  def prevent_url
+    if @item.user_id == current_user.id || @item.order != nil
+      redirect_to root_path
     end
   end
 
