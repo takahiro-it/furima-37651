@@ -13,7 +13,6 @@ class OrdersController < ApplicationController
     if @order_customer.valid?
       pay_item
       @order_customer.save
-      current_user == @item.user
       redirect_to root_path 
     else
       render :index
@@ -44,7 +43,7 @@ class OrdersController < ApplicationController
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
   end
-end
+
 
 
 
