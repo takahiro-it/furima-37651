@@ -18,6 +18,7 @@ RSpec.describe OrderCustomer, type: :model do
 
       it '建物名が空でも購入できること' do
         @order_customer.building_name = nil
+        expect(@order_customer).to be_valid
       end
 
     end
@@ -74,6 +75,12 @@ RSpec.describe OrderCustomer, type: :model do
 
       it '9桁以下では登録できないこと' do
         @order_customer.phone_number = '000000'
+        @order_customer.valid?
+        expect(@order_customer.errors.full_messages).to include("Phone number is invalid")
+      end
+
+      it '12桁以上では登録できないこと' do
+        @order_customer.phone_number = '000000000000'
         @order_customer.valid?
         expect(@order_customer.errors.full_messages).to include("Phone number is invalid")
       end
