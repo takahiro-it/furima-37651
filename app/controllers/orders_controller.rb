@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
       pay_item
       @order_customer.save
       current_user == @item.user
-      redirect_to root_path unless current_user.id == @user_item.user_id
+      redirect_to root_path 
     else
       render :index
     end
