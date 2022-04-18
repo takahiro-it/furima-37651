@@ -5,8 +5,8 @@ class OrdersController < ApplicationController
   def index
     @order_customer = OrderCustomer.new
     redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
-    end
   end
+  
 
   def create
     @order_customer = OrderCustomer.new(order_params)
@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
       currency: 'jpy'                 # 通貨の種類（日本円）
     )
   end
-
+end
 
 
 
